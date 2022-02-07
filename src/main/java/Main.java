@@ -4,7 +4,7 @@ public class Main extends PApplet{
 
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
-    public static Ball[] balls = new Ball[4];
+    public static int[] ballPositions = new int[4];
 
     public static void main(String[] args) {
         PApplet.main("Main", args);
@@ -17,39 +17,19 @@ public class Main extends PApplet{
     }
 
     @Override
-    public void setup() {
-        for (int i = 1; i <= 4; i++) {
-            balls[i-1] = new Ball(HEIGHT*i/5, i);
-        }
-    }
-
-    @Override
     public void draw() {
         for (int i = 0; i < 4; i++) {
-            balls[i].drawCircle();
-            balls[i].reposition();
+            drawCircle(i);
+            repositionBall(i);
         }
     }
 
-    class Ball{
-        private final int radius;
-        private final int height;
-        private final int speed;
-        private int position;
-
-        Ball(int height, int speed) {
-            this.height = height;
-            this.speed = speed;
-            position = 0;
-            radius = 20;
-        }
-
-        void drawCircle() {
-            ellipse(position, height, radius, radius);
-        }
-
-        void reposition(){
-            this.position+=this.speed;
-        }
+    private void repositionBall(int i) {
+        ballPositions[i]+=i+1;
     }
+
+    private void drawCircle(int i) {
+        ellipse(ballPositions[i], HEIGHT * (1 + i) / 5, 20, 20);
+    }
+
 }
